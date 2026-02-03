@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Customer Signup{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-5">
+
+    <div class="card p-4 shadow-sm">
+      <h4 class="mb-4 text-center">Create Customer Account</h4>
+
+      {% if error %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+
+        <input
+          class="form-control mb-3"
+          name="username"
+          placeholder="Username"
+          required
+        >
+
+        <input
+          class="form-control mb-3"
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        >
+
+        <input
+          class="form-control mb-3"
+          name="phone"
+          placeholder="Phone Number"
+          required
+        >
+
+        <button class="btn btn-success w-100">
+          Sign Up
+        </button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        Already have an account?
+        <a href="/login/">Login</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

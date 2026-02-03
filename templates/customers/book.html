@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Book a Bouncer{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card p-4 shadow-sm">
+      <h4 class="mb-4 text-center">Book a Bouncer</h4>
+
+      <form method="post">
+        {% csrf_token %}
+
+        <input
+          class="form-control mb-3"
+          name="customer_name"
+          placeholder="Your Name"
+          required
+        >
+
+        <input
+          class="form-control mb-3"
+          name="customer_phone"
+          placeholder="Phone Number"
+          required
+        >
+
+        <input
+          class="form-control mb-3"
+          name="city"
+          placeholder="City"
+          required
+        >
+
+        <input
+          class="form-control mb-3"
+          name="location"
+          placeholder="Event Location"
+          required
+        >
+
+        <label class="form-label">Start Time</label>
+        <input
+          class="form-control mb-3"
+          type="datetime-local"
+          name="start_time"
+          required
+        >
+
+        <label class="form-label">End Time</label>
+        <input
+          class="form-control mb-3"
+          type="datetime-local"
+          name="end_time"
+          required
+        >
+
+        <input
+          class="form-control mb-4"
+          name="amount"
+          placeholder="Amount (₹)"
+          required
+        >
+
+        <button class="btn btn-success w-100">
+          Book Now
+        </button>
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card p-4 shadow-sm text-center">
+            <h3 class="mb-4">Welcome</h3>
+
+            <a href="/login/" class="btn btn-primary w-100 mb-3">
+                Login
+            </a>
+
+            <a href="/signup/" class="btn btn-outline-primary w-100">
+                Signup
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

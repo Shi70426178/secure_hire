@@ -1,0 +1,15 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+.form-control {
+    border-radius: 8px;
+}

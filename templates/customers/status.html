@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Booking Status{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card p-4 shadow-sm">
+      <h4 class="mb-4 text-center">Booking Status</h4>
+
+      <p><strong>Booking ID:</strong> {{ job.id }}</p>
+      <p><strong>Name:</strong> {{ job.customer_name }}</p>
+      <p><strong>Location:</strong> {{ job.location }}</p>
+      <p><strong>Amount:</strong> ₹{{ job.amount }}</p>
+
+      <hr>
+
+      <p>
+        <strong>Status:</strong>
+        {% if job.status == "pending" %}
+          <span class="badge bg-warning text-dark">
+            ⏳ Finding bouncer
+          </span>
+        {% elif job.status == "accepted" %}
+          <span class="badge bg-info text-dark">
+            🛡️ Bouncer assigned
+          </span>
+        {% elif job.status == "arrived" %}
+          <span class="badge bg-primary">
+            📍 Bouncer arrived
+          </span>
+        {% elif job.status == "completed" %}
+          <span class="badge bg-success">
+            ✅ Job completed
+          </span>
+        {% elif job.status == "cancelled" %}
+          <span class="badge bg-danger">
+            ❌ Cancelled
+          </span>
+        {% endif %}
+      </p>
+
+      {% if job.bouncer %}
+        <div class="alert alert-success mt-3">
+          Bouncer has been assigned to your job.
+        </div>
+      {% else %}
+        <div class="alert alert-warning mt-3">
+          Waiting for bouncer assignment…
+        </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
