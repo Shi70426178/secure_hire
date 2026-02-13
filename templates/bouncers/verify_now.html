@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Verify Account{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card p-4 shadow-sm">
+      <h4 class="mb-3 text-center">Bouncer Verification</h4>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input class="form-control mb-3" name="full_name" placeholder="Full Name" required>
+
+        <input class="form-control mb-3" name="email" type="email" placeholder="Email" required>
+
+        <input class="form-control mb-3" name="phone" placeholder="Mobile Number" required>
+
+        <label class="form-label">Upload Aadhaar Card Photo</label>
+        <input class="form-control mb-3" type="file" name="aadhar_photo" required>
+
+        <button class="btn btn-success w-100">
+          Submit Verification
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

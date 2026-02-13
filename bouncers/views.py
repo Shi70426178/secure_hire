@@ -6,7 +6,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from .models import BouncerProfile
-
+from .models import BouncerVerificationRequest
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from .models import BouncerProfile, Job
 
 
@@ -178,3 +180,46 @@ def bouncer_signup(request):
         return redirect("bouncer_dashboard")
 
     return render(request, "bouncers/signup.html")
+
+
+@login_required
+def verify_now(request):
+    profile = get_object_or_404(BouncerProfile, user=request.user)
+
+    # If already verified, redirect
+    if profile.is_verified:
+        return redirect("bouncer_dashboard")
+
+    # if already submitted
+    existing = BouncerVerificationRequest.objects.filter(bouncer=profile).first()
+
+    if request.method == "POST":
+        full_name = request.POST.get("full_name")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        aadhar_photo = request.FILES.get("aadhar_photo")
+
+        if not aadhar_photo:
+            messages.error(request, "Please upload Aadhaar photo.")
+            return redirect("verify_now")
+
+        if existing:
+            existing.full_name = full_name
+            existing.email = email
+            existing.phone = phone
+            existing.aadhar_photo = aadhar_photo
+            existing.is_rejected = False
+            existing.save()
+        else:
+            BouncerVerificationRequest.objects.create(
+                bouncer=profile,
+                full_name=full_name,
+                email=email,
+                phone=phone,
+                aadhar_photo=aadhar_photo
+            )
+
+        messages.success(request, "Verification submitted. Wait for admin approval.")
+        return redirect("bouncer_dashboard")
+
+    return render(request, "bouncers/verify_now.html", {"profile": profile, "existing": existing})

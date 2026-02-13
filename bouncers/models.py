@@ -38,6 +38,13 @@ class Job(models.Model):
         blank=True,
         related_name="jobs"
     )
+    customer = models.ForeignKey(
+        "customers.CustomerProfile",
+        on_delete=models.CASCADE,
+        related_name="jobs",
+        null=True,
+        blank=True
+    )
 
     customer_name = models.CharField(max_length=200)
     customer_phone = models.CharField(max_length=15)
@@ -60,3 +67,23 @@ class Job(models.Model):
 
     def __str__(self):
         return f"{self.customer_name} - {self.status}"
+class BouncerVerificationRequest(models.Model):
+    bouncer = models.OneToOneField(
+        BouncerProfile,
+        on_delete=models.CASCADE,
+        related_name="verification_request"
+    )
+
+    full_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+
+    aadhar_photo = models.ImageField(upload_to="aadhar_photos/")
+
+    is_approved = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
+
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name} ({self.bouncer.user.username})"

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-4">
+
+    <div class="card p-3 shadow-sm">
+      <h5 class="mb-3">My Profile</h5>
+
+      <p><strong>Username:</strong> {{ profile.user.username }}</p>
+      <p><strong>Phone:</strong> {{ profile.phone }}</p>
+      <p><strong>Joined:</strong> {{ profile.created_at }}</p>
+
+      <a href="/customer/book/" class="btn btn-success w-100 mt-2">
+        Book a Bouncer
+      </a>
+    </div>
+
+  </div>
+
+  <div class="col-md-8">
+
+    <div class="card p-3 shadow-sm">
+      <h5 class="mb-3">My Bookings</h5>
+
+      {% if bookings %}
+        {% for job in bookings %}
+          <div class="border rounded p-3 mb-3">
+            <p class="mb-1"><strong>Booking ID:</strong> {{ job.id }}</p>
+            <p class="mb-1"><strong>City:</strong> {{ job.city }}</p>
+            <p class="mb-1"><strong>Location:</strong> {{ job.location }}</p>
+            <p class="mb-1"><strong>Amount:</strong> ₹{{ job.amount }}</p>
+
+            <p class="mb-1">
+              <strong>Status:</strong>
+              <span class="badge bg-secondary">{{ job.status|title }}</span>
+            </p>
+
+            <a href="{% url 'booking_status' job.id %}" class="btn btn-sm btn-primary mt-2">
+              View Status
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="alert alert-info">
+          No bookings yet.
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -28,6 +28,16 @@
     {% endif %}
   </div>
 </div>
+{% if not profile.is_verified %}
+  <div class="alert alert-warning">
+    <strong>Your account is not verified.</strong>
+    Please submit verification details to get jobs.
+
+    <a href="{% url 'verify_now' %}" class="btn btn-sm btn-primary ms-2">
+      Verify Now
+    </a>
+  </div>
+{% endif %}
 
 <hr>
 
